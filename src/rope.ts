@@ -1,20 +1,20 @@
 
 export {}
 
-/**
- * Static implementations.
- */
+// /**
+//  * Static implementations.
+//  */
 
-String.empty = () => {
-  return ""
-}
+// String.empty = () => {
+//   return ""
+// }
 
 /**
  * Instance implementations.
  */
 
 String.prototype.capitalized = 
-function (this: string, limit?: number = -1, delimeters?: string[]): string {
+function (this: string, limit: number = -1, delimeters?: string[]): string {
   // Ignore if just whitespace
   if (this.isEmptyOrWhitespace()) {
     return this
@@ -64,7 +64,7 @@ function(this: string): string {
 String.prototype.insert =
 function(this: string, index: number, text: string): string {
   if (index < 0) {
-    throw new RangeError(`Unable to insert text at index '${number}'`)
+    throw new RangeError(`Unable to insert text at index '${index}'`)
   }
 
   return `${this.substring(0, index)}${text}${this.substring(index)}` 
@@ -141,7 +141,7 @@ function(this: string, startIndex: number, endIndex?: number): string {
     throw new RangeError(`Cannot start string removal from index ${startIndex}`)
   }
 
-  if (startIndex > endIndex) {
+  if (endIndex != null && startIndex > endIndex) {
     throw new RangeError(`Cannot start string removal from index ${startIndex} as it is greater than the end index ${endIndex}`)
   }
 
@@ -163,10 +163,18 @@ function(this: string): string {
 
 String.prototype.toAscii =
 function (this: string): string {
-  return Buffer.from(this, 'base64').toString('ascii')
+  if (typeof Buffer !== 'undefined') {
+    return Buffer.from(this, 'base64').toString('ascii')
+  } else {
+    return atob(this)
+  }
 }
 
 String.prototype.toBase64 =
 function (this: string): string {
-  return Buffer.from(this).toString('base64')
+  if (typeof Buffer !== 'undefined') {
+    return Buffer.from(this).toString('base64')
+  } else {
+    return btoa(this)
+  }
 }

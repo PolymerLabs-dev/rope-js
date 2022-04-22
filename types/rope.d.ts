@@ -10,7 +10,7 @@ interface String {
    * @param delimeters characters to use to seperate words within the `string`. Set to `undefined` to use the default Regex delimeters. Default `undefined`.
    * @returns a capitalized `string`.
    */
-  capitalized(limit: number = -1, delimeters?: string[]): string
+  capitalized(limit: number, delimeters?: string[]): string
 
   /**
    * Returns this `string` as a list of characters.
@@ -76,7 +76,7 @@ interface String {
    * @param allowExponents `true` to allow for exponent notation. Default `false`.
    * @returns `true` if this `string` is strictly numeric.
    */
-  isStrictNumeric(allowExponents: boolean = false): boolean
+  isStrictNumeric(allowExponents: boolean): boolean
 
   /**
    * Joins this `string` with another `string` with a given separator and returns the result.
@@ -85,14 +85,14 @@ interface String {
    * @param separator the separator to use when joining. Default `' '`.
    * @returns the resultant `string` after joining the text.
    */
-  join(text: string, separator: string = ' '): string
+  join(text: string, separator: string): string
 
   /**
    * Finds a random sample from this `string` of a given size and returns the result.
    * 
    * @returns
    */
-  sample(size: number = 1): string
+  sample(size: number): string
 
   /**
    * Removes a portion of a `string` and returns the result.

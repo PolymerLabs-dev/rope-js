@@ -1,4 +1,6 @@
 
+export {}
+
 declare global {
   interface StringConstructor {
     /**
@@ -6,6 +8,6 @@ declare global {
      * 
      * @returns an empty `string`.
      */
-    empty(): string;
+    empty(): string
   }
 }
