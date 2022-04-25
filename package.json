@@ -1,6 +1,6 @@
 {
   "name": "@polymer-co/rope",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A multi-function string extension package.",
   "main": "dist/rope.js",
   "scripts": {
@@ -8,6 +8,9 @@
     "clean": "rm -rf ./dist",
     "test": "npm run compile && npx jest"
   },
+  "files": [
+    "dist/*"
+  ],
   "engine": {
     "node": "*"
   },
