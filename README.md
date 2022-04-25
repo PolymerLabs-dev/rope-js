@@ -26,7 +26,7 @@ Download the most recent `rope.js` from the releases section on GitHub. Include 
 
 ## Usage
 
-For full API documentation, check the declaration file [dist/rope.d.ts](dist/rope.d.ts).
+For full API documentation, check the declaration file [src/rope.ts](src/rope.ts).
 
 ### If installed with `npm`
 
