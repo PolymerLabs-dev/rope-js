@@ -2,9 +2,9 @@
 
 ## Overview
 
-Rope JS extends the inbuilt JavaScript string type with additional helper functions. It's focus was to be simple and to not require wrapper classes to function - all you need to do is `require` it, and start using!
+Rope JS extends the inbuilt JavaScript string type with additional helper functions. It's focus is to be simple and to not require wrapper classes - all you need to do is `require` it, and start using!
 
-TypeScript types are included by default.
+TypeScript types declaration files are included by default.
 
 ## Installation
 
@@ -25,6 +25,8 @@ Download the most recent `rope.js` from the releases section on GitHub. Include 
 ```
 
 ## Usage
+
+For full API documentation, check the declaration file [dist/rope.d.ts](dist/rope.d.ts).
 
 ### If installed with `npm`
 
