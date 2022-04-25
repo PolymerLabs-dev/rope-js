@@ -1,5 +1,5 @@
 {
-  "name": "rope",
+  "name": "@polymer-co/rope",
   "version": "0.0.1",
   "description": "A multi-function string extension package.",
   "main": "dist/rope.js",
