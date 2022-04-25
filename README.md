@@ -33,7 +33,7 @@ For full API documentation, check the declaration file [dist/rope.d.ts](dist/rop
 Within your entry point file (eg, `main.ts` or `main.js`), import `rope`:
 
 ```typescript
-import 'rope'
+import '@polymer-co/rope'
 ```
 
 After importing, the extension methods should be usable in all other files.
