@@ -2,9 +2,30 @@
 
 ## Overview
 
+```bash
+npm install @polymer-co/rope
+```
+
 Rope JS extends the inbuilt JavaScript string type with additional helper functions. It's focus is to be simple and to not require wrapper classes - all you need to do is `require` it, and start using!
 
-It includes super useful helper classes, from inserting strings, capitalizing, sampling, and more! It also includes case conversion (ie, camel case to pascal), allowing you to convert from all the well-known casings to any other!
+It includes super useful helper classes, from inserting strings, capitalizing, sampling, and more! It also includes case conversion (ie, camel case to pascal), allowing you to convert from all the well-known casings to any other. Case conversions include:
+
+| Case | Example | Lossy? |
+| - | - | - |
+| camel | `helloWorld` | No |
+| camelSnake | `hello_World` | No |
+| cobol | `HELLO-WORLD` | No |
+| flat | `helloworld` | Yes |
+| kebab | `hello-world` | No |
+| macro | `HELLO_WORLD` | No |
+| pascal | `HelloWorld` | No |
+| sarcastic| `hElLo wOrLd` | No |
+| sentence | `hello, world` | No |
+| snake | `hello_world` | No |
+| train | `Hello-World` | No |
+| upperFlat  | `HELLOWORLD` | Yes |
+
+> 'Lossy' implies that word seperation will be lost when converting to this case. For example, converting from camel to flat will result in 'camelCase' being converted to 'camelcase' - the flat case output _cannot_ be converted back into camelCase, as word seperation has not been preseved.
 
 TypeScript types declaration files are included by default.
 

@@ -2,7 +2,7 @@
 /**
  * Declares the available cases.
  */
-type Case = 'camel' | 'camelSnake' | 'cobol' | 'flat' | 'kebab' | 'macro' | 'pascal' | 'sentence' | 'snake' | 'train' | 'upperFlat'
+type Case = 'camel' | 'camelSnake' | 'cobol' | 'flat' | 'kebab' | 'macro' | 'pascal'| 'sarcastic' | 'sentence' | 'snake' | 'train' | 'upperFlat'
 
 interface String {
 
@@ -39,7 +39,8 @@ interface String {
    * `kebab`      | `hello-world`
    * `macro`      | `HELLO_WORLD`
    * `pascal`     | `HelloWorld`
-   * `sentence`   | `hello world` ('from' conversion boundaries expressed by Regex non-word `\W`)
+   * `sarcastic`  | `hElLo wOrLd`
+   * `sentence`   | `hello, world` ('from' conversion boundaries expressed by Regex non-word `\W`)
    * `snake`      | `hello_world`
    * `train`      | 'Hello-World'
    * `upperFlat`  | `HELLOWORLD` (lossy)
@@ -49,7 +50,7 @@ interface String {
    * @param toCase the `Case` to convert to.
    * @returns a `string` represented in the new `Case`.
    */
-  convertCase(fromCase: Case, toCase: Case): string;
+  convertCase(fromCase: Case, toCase: Case): string
 
   /**
    * Performs a deep copy of this `string`.
@@ -216,7 +217,7 @@ function(this: string, fromCase: Case, toCase: Case = 'sentence'): string {
     return this
   }
   
-  let textAsKebab: string = this;
+  let textAsKebab: string = this
 
   switch (fromCase) {
     case 'sentence':
@@ -230,13 +231,29 @@ function(this: string, fromCase: Case, toCase: Case = 'sentence'): string {
       break
     case 'cobol':
       textAsKebab = cobolToKebab(this)
-      break;
+      break
     case 'flat':
       textAsKebab = flatToKebab(this)
-      break;
+      break
     case 'macro':
       textAsKebab = macroToKebab(this)
-      break;
+      break
+    case 'pascal':
+      textAsKebab = pascalToKebab(this)
+      break
+    case 'snake':
+      textAsKebab = snakeToKebab(this)
+      break
+    case 'train':
+      textAsKebab = trainToKebab(this)
+    case 'upperFlat':
+      textAsKebab = upperFlatToKebab(this)
+    case 'sarcastic':
+      textAsKebab = sarcasticToKebab(this)
+    case 'kebab':
+      break
+    default:
+      throw new Error(`Cannot convert from case '${fromCase}': case invalid.`)
   }
 
   switch (toCase) {
@@ -252,9 +269,21 @@ function(this: string, fromCase: Case, toCase: Case = 'sentence'): string {
       return kebabToFlat(textAsKebab)
     case 'macro':
       return kebabToMacro(textAsKebab)
+    case 'pascal':
+      return kebabToPascal(textAsKebab)
+    case 'snake':
+      return kebabToSnake(textAsKebab)
+    case 'train':
+      return kebabToTrain(textAsKebab)
+    case 'upperFlat':
+      return kebabToUpperFlat(textAsKebab)
+    case 'sarcastic':
+      return kebabToSarcastic(textAsKebab)
+    case 'kebab':
+      return textAsKebab
+    default:
+      throw new Error(`Cannot convert to case '${toCase}': case invalid.`)
   }
-
-  return textAsKebab
 }
 
 String.prototype.copy =
@@ -508,4 +537,112 @@ function kebabToFlat(text: string): string {
  */
 function kebabToMacro(text: string): string {
   return text.toUpperCase().replaceAll('-', '_')
+}
+
+/**
+ * Converts from `pascal` case to `kebab` case.
+ * 
+ * @param text `pascal` case text to convert.
+ * @returns the text in `kebab` case.
+ */
+ function pascalToKebab(text: string): string {
+  return text.replaceAll(/(?<!^)([A-Z])/g, (m: string) => {
+    return `-${m}`
+  }).toLowerCase()
+}
+
+/**
+ * Converts from `kebab` case to `pascal` cases.
+ * 
+ * @param text `pascal` case text to convert
+ * @returns the `text` in `macro` case.
+ */
+function kebabToPascal(text: string): string {
+  return text.replaceAll(/(?:-|^)(\w)/g, (_: string, m1: string) => {
+    return `${m1.toUpperCase()}`
+  })
+}
+
+/**
+ * Converts from `sarcastic` case to `kebab` case.
+ * 
+ * @param text `sarcastic` case text to convert.
+ * @returns the text in `kebab` case.
+ */
+ function sarcasticToKebab(text: string): string {
+  return text.replace(' ', '-').toLowerCase()
+}
+
+/**
+ * Converts from `kebab` case to `sarcastic` cases.
+ * 
+ * @param text `kebab` case text to convert
+ * @returns the `text` in `sarcastic` case.
+ */
+function kebabToSarcastic(text: string): string {
+  return text.replace('-', ' ').replaceAll(/.{2}/g, (m: string) => {
+    return `${m.capitalize()}`
+  })
+}
+
+/**
+ * Converts from `snake` case to `kebab` case.
+ * 
+ * @param text `snake` case text to convert.
+ * @returns the text in `kebab` case.
+ */
+function snakeToKebab(text: string): string {
+  return text.replaceAll('-', '_')
+}
+
+/**
+ * Converts from `kebab` case to `snake` cases.
+ * 
+ * @param text `kebab` case text to convert
+ * @returns the `text` in `snake` case.
+ */
+function kebabToSnake(text: string): string {
+  return text.replaceAll('_', '-')
+}
+
+/**
+ * Converts from `train` case to `kebab` case.
+ * 
+ * @param text `train` case text to convert.
+ * @returns the text in `kebab` case.
+ */
+ function trainToKebab(text: string): string {
+  return text.toLowerCase()
+}
+
+/**
+ * Converts from `kebab` case to `train` cases.
+ * 
+ * @param text `kebab` case text to convert
+ * @returns the `text` in `train` case.
+ */
+function kebabToTrain(text: string): string {
+  return text.replaceAll(/(?:-|^)(\w)/g, (_: string, m1: string) => {
+    return `${m1.toUpperCase()}`
+  })
+}
+
+/**
+ * Converts from `upperFlat` case to `kebab` case.
+ * 
+ * @param text `upperFlat` case text to convert.
+ * @returns the text in `kebab` case.
+ */
+ function upperFlatToKebab(text: string): string {
+  return text.toLowerCase()
+}
+
+/**
+ * Converts from `kebab` case to `upperFlat` cases.
+ * 
+ * @param text `kebab` case text to convert
+ * @returns the `text` in `upperFlat` case.
+ */
+function kebabToUpperFlat(text: string): string {
+  return text.replace('-', '').toUpperCase()
 }
