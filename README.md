@@ -6,9 +6,9 @@
 npm install @polymer-co/rope
 ```
 
-Rope JS extends the inbuilt JavaScript string type with additional helper functions. It's focus is to be simple and to not require wrapper classes - all you need to do is `require` it, and start using!
+Rope JS extends the inbuilt JavaScript string type with additional helper methods. It's focus is to be simple and to not require wrapper classes - all you need to do is `require` it, and start using!
 
-It includes super useful helper classes, from inserting strings, capitalizing, sampling, and more! It also includes case conversion (ie, camel case to pascal), allowing you to convert from all the well-known casings to any other. Case conversions include:
+It includes super useful helper methods; from inserting strings, capitalizing, random sampling, and more! Rope JS also provides utilities for case conversion (ie, camel case to pascal), allowing you to convert from all the well-known casings to any other. Case conversions include:
 
 | Case | Example | Lossy? |
 | - | - | - |
