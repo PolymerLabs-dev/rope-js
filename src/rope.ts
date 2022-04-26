@@ -1,6 +1,6 @@
 
 /**
- * Declares the available cases.
+ * Cases available to be converted.
  */
 type Case = 'camel' | 'camelSnake' | 'cobol' | 'flat' | 'kebab' | 'macro' | 'pascal'| 'sarcastic' | 'sentence' | 'snake' | 'train' | 'upperFlat'
 
