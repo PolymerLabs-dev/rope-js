@@ -124,7 +124,7 @@ interface String {
    * Finds a random sample from this `string` of a given size and returns the result.
    * 
    * @param size the size of the string to sample, must be greater than zero. Default `1`.
-   * @returns
+   * @returns a random sampling of this `string`.
    */
   sample(size?: number): string
 
