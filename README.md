@@ -4,6 +4,8 @@
 
 Rope JS extends the inbuilt JavaScript string type with additional helper functions. It's focus is to be simple and to not require wrapper classes - all you need to do is `require` it, and start using!
 
+It includes super useful helper classes, from inserting strings, capitalizing, sampling, and more! It also includes case conversion (ie, camel case to pascal), allowing you to convert from all the well-known casings to any other!
+
 TypeScript types declaration files are included by default.
 
 ## Installation
@@ -45,6 +47,12 @@ There should be no other action needed if installed via a static file.
 ## Examples
 
 The below examples do not include all available methods, it is meant to demonstrate general usage.
+
+**Convert from camel case to train case**
+```typescript
+"thisIsCamelCase".convertCase('camel', 'pascal') // "This-Is-Camel-Case
+```
+> See [src/rope.ts](src/rope.ts)'s `Case` type for a list of available case conversions.
 
 **Uppercase all words in a sentence**
 ```typescript

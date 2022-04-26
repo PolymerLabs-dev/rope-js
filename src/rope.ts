@@ -1,4 +1,9 @@
 
+/**
+ * Declares the available cases.
+ */
+type Case = 'camel' | 'camelSnake' | 'cobol' | 'flat' | 'kebab' | 'macro' | 'pascal' | 'sentence' | 'snake' | 'train' | 'upperFlat'
+
 interface String {
 
   /**
@@ -12,10 +17,10 @@ interface String {
    * Capitalizes every word in this `string`.
    * 
    * @param limit maximum limit of upper case conversions, set to `-1` for no limit. Default `-1`.
-   * @param delimeters characters to use to seperate words within the `string`. Set to `undefined` to use the default Regex delimeters. Default `undefined`.
+   * @param delimiters characters to use to separate words within the `string`. Set to `undefined` to use the default Regex delimiters. Default `undefined`.
    * @returns a capitalized `string`.
    */
-  capitalizeAll(limit?: number, delimeters?: string[] | string): string
+  capitalizeAll(limit?: number, delimiters?: string[] | string): string
 
   /**
    * Returns this `string` as a list of characters.
@@ -23,6 +28,28 @@ interface String {
    * @returns a list of characters.
    */
   chars(): string[]
+
+  /**
+   * Converts this `string` from a `Case` to another `Case`. Converting from and to 'lossy' cases will cause loss of word separation boundaries.
+   * ```ts
+   * `camel`      | `helloWorld`
+   * `camelSnake` | `hello_World`
+   * `cobol`      | `HELLO-WORLD`
+   * `flat`       | `helloworld` (lossy)
+   * `kebab`      | `hello-world`
+   * `macro`      | `HELLO_WORLD`
+   * `pascal`     | `HelloWorld`
+   * `sentence`   | `hello world` ('from' conversion boundaries expressed by Regex non-word `\W`)
+   * `snake`      | `hello_world`
+   * `train`      | 'Hello-World'
+   * `upperFlat`  | `HELLOWORLD` (lossy)
+   * ```
+   * 
+   * @param fromCase the `Case` to convert from.
+   * @param toCase the `Case` to convert to.
+   * @returns a `string` represented in the new `Case`.
+   */
+  convertCase(fromCase: Case, toCase: Case): string;
 
   /**
    * Performs a deep copy of this `string`.
@@ -62,7 +89,7 @@ interface String {
   isInteger(): boolean
 
   /**
-   * Determines if this `string` is strictly an integer `number`. Will fail if `string` is not an integer number, even in cases where JavaScipt can interpret it as a `number`.
+   * Determines if this `string` is strictly an integer `number`. Will fail if `string` is not an integer number, even in cases where JavaScript can interpret it as a `number`.
    * 
    * @returns `true` if this `string` is a numeric integer.
    */
@@ -76,7 +103,7 @@ interface String {
   isNumeric(): boolean
 
   /**
-   * Determines if this `string` is strictly a number. Will fail if `string` is not a number, even in cases where JavaScipt can interpret it as a `number`.
+   * Determines if this `string` is strictly a number. Will fail if `string` is not a number, even in cases where JavaScript can interpret it as a `number`.
    * 
    * @param allowExponents `true` to allow for exponent notation. Default `false`.
    * @returns `true` if this `string` is strictly numeric.
@@ -141,9 +168,9 @@ function (this: string): string {
 }
 
 String.prototype.capitalizeAll = 
-function (this: string, limit: number = -1, delimeters?: string[] | string): string {
-  if (delimeters != null && !Array.isArray(delimeters)) {
-    delimeters = [delimeters] as string[]
+function (this: string, limit: number = -1, delimiters?: string[] | string): string {
+  if (delimiters != null && !Array.isArray(delimiters)) {
+    delimiters = [delimiters] as string[]
   }
 
   // Ignore if just whitespace
@@ -151,7 +178,7 @@ function (this: string, limit: number = -1, delimeters?: string[] | string): str
     return this
   }
 
-  let regex: RegExp = delimeters == null ? /(\b)(\w)/g : new RegExp(`([${delimeters.join('')}])(\\w)`, 'g')
+  let regex: RegExp = delimiters == null ? /(\b)(\w)/g : new RegExp(`([${delimiters.join('')}])(\\w)`, 'g')
 
   // Function that performs the replacement operation
   const replacer = (_: string, m1: string, m2: string) => {
@@ -177,6 +204,57 @@ function (this: string, limit: number = -1, delimeters?: string[] | string): str
 String.prototype.chars =
 function(this: string): string[] {
   return this.split('')
+}
+
+String.prototype.convertCase =
+function(this: string, fromCase: Case, toCase: Case = 'sentence'): string {
+  if (this.isEmptyOrWhitespace()) {
+    return ''
+  }
+
+  if (fromCase == toCase) {
+    return this
+  }
+  
+  let textAsKebab: string = this;
+
+  switch (fromCase) {
+    case 'sentence':
+      textAsKebab = sentenceToKebab(this)
+      break
+    case 'camel':
+      textAsKebab = camelToKebab(this)
+      break
+    case 'camelSnake':
+      textAsKebab = camelSnakeToKebab(this)
+      break
+    case 'cobol':
+      textAsKebab = cobolToKebab(this)
+      break;
+    case 'flat':
+      textAsKebab = flatToKebab(this)
+      break;
+    case 'macro':
+      textAsKebab = macroToKebab(this)
+      break;
+  }
+
+  switch (toCase) {
+    case 'sentence':
+      return kebabToSentence(textAsKebab)
+    case 'camel':
+      return kebabToCamel(textAsKebab)
+    case 'camelSnake':
+      return kebabToCamelSnake(textAsKebab)
+    case 'cobol':
+      return kebabToCobol(textAsKebab)
+    case 'flat':
+      return kebabToFlat(textAsKebab)
+    case 'macro':
+      return kebabToMacro(textAsKebab)
+  }
+
+  return textAsKebab
 }
 
 String.prototype.copy =
@@ -304,4 +382,130 @@ function (this: string): string {
   } else {
     return btoa(this)
   }
+}
+
+/**
+ * Converts from `sentence` case to `kebab` case.
+ * 
+ * @param text `sentence` case text to convert.
+ * @returns the text in kebab case.
+ */
+function sentenceToKebab(text: string): string {
+  return text.toLowerCase().replaceAll(/(?<!^)(?:\W+)(\w)/g, '-$1')
+}
+
+/**
+ * Converts from `kebab` case to `sentence` cases, using spaces as the separators.
+ * 
+ * @param text `kebab` case text to convert
+ * @returns the text in `sentence` case.
+ */
+function kebabToSentence(text: string): string {
+  return text.replaceAll('-', ' ')
+}
+
+/**
+ * Converts from `camel` case to `kebab` case.
+ * 
+ * @param text `camel` case text to convert.
+ * @returns the text in `kebab` case.
+ */
+ function camelToKebab(text: string): string {
+  return text.replaceAll(/[A-Z]/g, (m: string) => {
+    return `-${m.toLowerCase()}`
+  })
+}
+
+/**
+ * Converts from `kebab` case to `camel` cases.
+ * 
+ * @param text `kebab` case text to convert
+ * @returns the `text` in `camel` case.
+ */
+function kebabToCamel(text: string): string {
+  return text.replaceAll(/-(\w)/g, (_: string, m1: string) => {
+    return `${m1.toUpperCase()}`
+  })
+}
+
+/**
+ * Converts from `camelSnake` case to `kebab` case.
+ * 
+ * @param text `camelSnake` case text to convert.
+ * @returns the text in `kebab` case.
+ */
+ function camelSnakeToKebab(text: string): string {
+  return text.toLowerCase().replaceAll('_', '-')
+}
+
+/**
+ * Converts from `kebab` case to `camelSnake` cases.
+ * 
+ * @param text `kebab` case text to convert
+ * @returns the `text` in `camelSnake` case.
+ */
+function kebabToCamelSnake(text: string): string {
+  return text.replaceAll(/-(\w)/g, (_: string, m1: string) => {
+    return `_${m1.toUpperCase()}`
+  })
+}
+
+/**
+ * Converts from `cobol` case to `kebab` case.
+ * 
+ * @param text `cobol` case text to convert.
+ * @returns the text in `kebab` case.
+ */
+ function cobolToKebab(text: string): string {
+  return text.toLowerCase()
+}
+
+/**
+ * Converts from `kebab` case to `cobol` cases.
+ * 
+ * @param text `kebab` case text to convert
+ * @returns the `text` in `cobol` case.
+ */
+function kebabToCobol(text: string): string {
+  return text.toUpperCase()
+}
+
+/**
+ * Converts from `flat` case to `kebab` case.
+ * 
+ * @param text `flat` case text to convert.
+ * @returns the text in `kebab` case.
+ */
+ function flatToKebab(text: string): string {
+  return text.copy()
+}
+
+/**
+ * Converts from `kebab` case to `flat` cases.
+ * 
+ * @param text `kebab` case text to convert
+ * @returns the `text` in `flat` case.
+ */
+function kebabToFlat(text: string): string {
+  return text.replaceAll('-', '')
+}
+
+/**
+ * Converts from `macro` case to `kebab` case.
+ * 
+ * @param text `macro` case text to convert.
+ * @returns the text in `kebab` case.
+ */
+ function macroToKebab(text: string): string {
+  return text.toLowerCase().replaceAll('_', '-')
+}
+
+/**
+ * Converts from `kebab` case to `macro` cases.
+ * 
+ * @param text `kebab` case text to convert
+ * @returns the `text` in `macro` case.
+ */
+function kebabToMacro(text: string): string {
+  return text.toUpperCase().replaceAll('-', '_')
 }
