@@ -71,7 +71,7 @@ The below examples do not include all available methods, it is meant to demonstr
 
 **Convert from camel case to train case**
 ```typescript
-"thisIsCamelCase".convertCase('camel', 'pascal') // "This-Is-Camel-Case
+"thisIsCamelCase".convertCase('camel', 'train') // "This-Is-Camel-Case
 ```
 > See [src/rope.ts](src/rope.ts)'s `Case` type for a list of available case conversions.
 
