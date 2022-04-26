@@ -570,7 +570,7 @@ function kebabToPascal(text: string): string {
  * @returns the text in `kebab` case.
  */
  function sarcasticToKebab(text: string): string {
-  return text.replace(' ', '-').toLowerCase()
+  return text.replaceAll(' ', '-').toLowerCase()
 }
 
 /**
@@ -580,7 +580,7 @@ function kebabToPascal(text: string): string {
  * @returns the `text` in `sarcastic` case.
  */
 function kebabToSarcastic(text: string): string {
-  return text.replace('-', ' ').replaceAll(/.{2}/g, (m: string) => {
+  return text.replaceAll('-', ' ').replaceAll(/.{2}|./g, (m: string) => {
     return `${m.capitalize()}`
   })
 }
@@ -592,7 +592,7 @@ function kebabToSarcastic(text: string): string {
  * @returns the text in `kebab` case.
  */
 function snakeToKebab(text: string): string {
-  return text.replaceAll('-', '_')
+  return text.replaceAll('_', '-')
 }
 
 /**
@@ -602,7 +602,7 @@ function snakeToKebab(text: string): string {
  * @returns the `text` in `snake` case.
  */
 function kebabToSnake(text: string): string {
-  return text.replaceAll('_', '-')
+  return text.replaceAll('-', '_')
 }
 
 /**
@@ -623,8 +623,8 @@ function kebabToSnake(text: string): string {
  */
 function kebabToTrain(text: string): string {
   return text.replaceAll(/(?:-|^)(\w)/g, (_: string, m1: string) => {
-    return `${m1.toUpperCase()}`
-  })
+    return `-${m1.toUpperCase()}`
+  }).substring(1)
 }
 
 /**
@@ -644,5 +644,5 @@ function kebabToTrain(text: string): string {
  * @returns the `text` in `upperFlat` case.
  */
 function kebabToUpperFlat(text: string): string {
-  return text.replace('-', '').toUpperCase()
+  return text.replaceAll('-', '').toUpperCase()
 }

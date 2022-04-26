@@ -35,7 +35,7 @@ describe('String.convertCase', () => {
     })
 
     test('that it can convert from `sentence` to `sarcastic`', () => {
-      expect('this, is a sentence case, string'.convertCase('sentence', 'sarcastic')).toEqual('tHiS Is a sEnTeNcE StRiNg')
+      expect('this, is a sentence case, string'.convertCase('sentence', 'sarcastic')).toEqual('ThIs iS A SeNtEnCe cAsE StRiNg')
     })
 
     test('that it can convert from `sentence` to `snake`', () => {
@@ -227,7 +227,7 @@ describe('String.convertCase', () => {
     })
 
     test('that it can convert from `flat` to `train`', () => {
-      expect('thisisflatcase'.convertCase('flat', 'train')).toEqual('THISISFLATCASE')
+      expect('thisisflatcase'.convertCase('flat', 'train')).toEqual('Thisisflatcase')
     })
 
     test('that it can convert from `flat` to `upperFlat`', () => {
@@ -337,7 +337,7 @@ describe('String.convertCase', () => {
     })
 
     test('that it can convert from `pascal` to `camel`', () => {
-      expect('ThisIsPascalCase'.convertCase('pascal', 'kebab')).toEqual('thisIsPascalCase')
+      expect('ThisIsPascalCase'.convertCase('pascal', 'kebab')).toEqual('this-is-pascal-case')
     })
 
     test('that it can convert from `pascal` to `camelSnake`', () => {
@@ -415,11 +415,11 @@ describe('String.convertCase', () => {
     })
     
     test('that it can convert from `sarcastic` to `upperFlat`', () => {
-      expect('ThIs iS SaRcAsTic cAsE'.convertCase('sarcastic', 'kebab')).toEqual('THISISSARCASTICCASE')
+      expect('ThIs iS SaRcAsTic cAsE'.convertCase('sarcastic', 'upperFlat')).toEqual('THISISSARCASTICCASE')
     })
 
     test('that it can convert from `sarcastic` to `sentence`', () => {
-      expect('ThIs iS SaRcAsTic cAsE'.convertCase('sarcastic', 'kebab')).toEqual('this is sarcastic case')
+      expect('ThIs iS SaRcAsTic cAsE'.convertCase('sarcastic', 'sentence')).toEqual('this is sarcastic case')
     })
   })
 
@@ -433,7 +433,7 @@ describe('String.convertCase', () => {
     })
 
     test('that it can convert from `snake` to `camelSnake`', () => {
-      expect('this_is_snake_case'.convertCase('snake', 'camelSnake')).toEqual('this_Is_Camel_Snake')
+      expect('this_is_snake_case'.convertCase('snake', 'camelSnake')).toEqual('this_Is_Snake_Case')
     })
 
     test('that it can convert from `snake` to `cobol`', () => {
@@ -475,7 +475,7 @@ describe('String.convertCase', () => {
     })
 
     test('that it can convert from `train` to `camel`', () => {
-      expect('This-Is-Train-Case'.convertCase('train', 'camel')).toEqual('thisIsCamelCase')
+      expect('This-Is-Train-Case'.convertCase('train', 'camel')).toEqual('thisIsTrainCase')
     })
 
     test('that it can convert from `train` to `camelSnake`', () => {
@@ -495,7 +495,7 @@ describe('String.convertCase', () => {
     })
 
     test('that it can convert from `train` to `pascal`', () => {
-      expect('This-Is-Train-Case'.convertCase('train', 'kebab')).toEqual('ThisIsTrainCase')
+      expect('This-Is-Train-Case'.convertCase('train', 'pascal')).toEqual('ThisIsTrainCase')
     })
 
     test('that it can convert from `train` to `sarcastic`', () => {
@@ -503,7 +503,7 @@ describe('String.convertCase', () => {
     })
 
     test('that it can convert from `train` to `snake`', () => {
-      expect('This-Is-Train-Case'.convertCase('train', 'kebab')).toEqual('this_is_train_case')
+      expect('This-Is-Train-Case'.convertCase('train', 'snake')).toEqual('this_is_train_case')
     })
 
     test('that it can convert from `train` to `upperFlat`', () => {
@@ -545,7 +545,7 @@ describe('String.convertCase', () => {
     })
 
     test('that it can convert from `upperFlat` to `sarcastic`', () => {
-      expect('THISISUPPERFLATCASE'.convertCase('upperFlat', 'sarcastic')).toEqual('ThIsIsUpPeRcAsEfLaT')
+      expect('THISISUPPERFLATCASE'.convertCase('upperFlat', 'sarcastic')).toEqual('ThIsIsUpPeRfLaTcAsE')
     })
 
     test('that it can convert from `upperFlat` to `snake`', () => {
