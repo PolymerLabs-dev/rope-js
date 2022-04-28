@@ -6,7 +6,7 @@
 npm install @polymer-co/rope
 ```
 
-Rope JS extends the inbuilt JavaScript string type with additional helper methods. It's focus is to be simple and to not require wrapper classes - all you need to do is `require` it, and start using! See [src/rope.ts](src/rope.ts) for available methods.
+Rope JS extends the inbuilt JavaScript string type with additional helper methods. It's focus is to be simple and to not require wrapper classes - all you need to do is `require` or `import` it, then start using! See [src/rope.ts](src/rope.ts) for available methods.
 
 It includes super useful helper methods; from inserting strings, capitalizing, random sampling, and more! Rope JS also provides utilities for case conversion (ie, camel case to pascal), allowing you to convert from all the well-known casings to any other. Case conversions include:
 
@@ -53,10 +53,14 @@ For full API documentation, check the declaration file [src/rope.ts](src/rope.ts
 
 ### If installed with `npm`
 
-Within your entry point file (eg, `main.ts` or `main.js`), import `rope`:
+Within your entry point file (eg, `main.ts` or `main.js`):
 
 ```typescript
 import '@polymer-co/rope'
+```
+or,
+```typescipt
+require('@polymer-co/rope')
 ```
 
 After importing, the extension methods should be usable in all other files.
