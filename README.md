@@ -60,7 +60,7 @@ import '@polymer-co/rope'
 ```
 or,
 
-```typescipt
+```typescript
 require('@polymer-co/rope')
 ```
 
