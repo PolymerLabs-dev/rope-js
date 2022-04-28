@@ -59,6 +59,7 @@ Within your entry point file (eg, `main.ts` or `main.js`):
 import '@polymer-co/rope'
 ```
 or,
+
 ```typescipt
 require('@polymer-co/rope')
 ```
