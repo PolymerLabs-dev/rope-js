@@ -4,4 +4,8 @@ describe('String.toAscii', () => {
   test('that it is defined', () => {
     expect(String.prototype.toAscii).toBeDefined()
   })
+
+  test('that it is defined', () => {
+    expect(String.prototype.toAscii).toBeDefined()
+  })
 })

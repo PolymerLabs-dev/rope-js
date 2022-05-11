@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "A multi-function string extension package.",
   "main": "dist/rope.js",
+  "type": "module",
   "scripts": {
     "compile": "npm run clean && npm install && tsc --outDir dist --project tsconfig.build.json",
     "clean": "rm -rf ./dist",
@@ -24,7 +25,6 @@
     "string",
     "extension",
     "rope",
-    "ropejs",
     "rope-js"
   ],
   "author": "Polymer Co.",

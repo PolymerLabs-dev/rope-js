@@ -132,7 +132,7 @@ interface String {
    * Removes a portion of a `string` and returns the result.
    * 
    * @param startIndex index in which to start the removal.
-   * @param endIndex last index to remove, `undefined` to remove until the end of the `string`. Default `undefined`.
+   * @param endIndex index to stop the removal, `undefined` to remove until the end of the `string`. Is not inclusive. Default `undefined`.
    * @returns the resultant `string` after removing the specified portion.
    */
   remove(startIndex: number, endIndex?: number): string
@@ -347,7 +347,11 @@ function(this: string, allowExponents: boolean = false): boolean {
     return false
   }
 
-  if (!/^[+-]?\d+(\.\d+)?$/.test(this)) {
+  if (allowExponents) {
+    if (!/^[+-]?\d+(\.\d+)?(e[+-]?\d+)?$/i.test(this)) {
+      return false
+    }
+  } else if (!/^[+-]?\d+(\.\d+)?$/.test(this)) {
     return false
   }
 
@@ -356,6 +360,10 @@ function(this: string, allowExponents: boolean = false): boolean {
 
 String.prototype.join =
 function(this: string, text: string, separator: string = ' '): string {
+  if (text.isEmpty()) {
+    return this
+  }
+  
   return `${this}${separator}${text}`
 }
 
